@@ -39,5 +39,34 @@
   </div>
 
 </body>
+<script>
+  $('.input_sub').on('click', function(e) {
+    //按钮是submit  会默认跳转刷新  需要阻止默认行为
+    e.preventDefault();
+    //获取用户名和密码的值  并且去掉两边空格
+    var uname = $('.input_txt').val().trim();
+    var passw = $('.input_pass').val().trim();
+    //判断输入的值   如果为空提示，如果不为空，写接口验证
+    if (uname == '' | passw == '') {
+      alert('来点字');
+    } else {
+      $.ajax({
+        type: 'post',
+        url: 'http://localhost:8080/api/v1/admin/user/login',
+        data: {
+          username: uname,
+          password: passw,
+        },
+        success: function(res) {
+          if (res.code == 400) {
+            alert(res.msg);
+          } else if (res.code == 200) {
+            window.location.href = './index.html';
+          }
+        }
+      })
+    }
+  })
+</script>
 
 </html>
