@@ -49,6 +49,7 @@
     //判断输入的值   如果为空提示，如果不为空，写接口验证
     if (uname == '' | passw == '') {
       alert('来点字');
+      return;
     } else {
       $.ajax({
         type: 'post',
@@ -61,6 +62,10 @@
           if (res.code == 400) {
             alert(res.msg);
           } else if (res.code == 200) {
+            console.log(res);
+
+            //保存登录成功之后的凭证
+            window.localStorage.setItem('info', res.token);
             window.location.href = './index.html';
           }
         }
